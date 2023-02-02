@@ -17,11 +17,14 @@ class WritingButton extends StatelessWidget {
             context: context,
             backgroundColor: Colors.transparent,
             builder: (context) {
-              return SizedBox(
-                height: MediaQuery.of(context).size.height * .4,
-                child: BlocProvider.value(
-                  value: cubit,
-                  child: const NewNote(),
+              return Padding(
+                padding: MediaQuery.of(context).viewInsets,
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height * .4,
+                  child: BlocProvider.value(
+                    value: cubit,
+                    child: const NewNote(),
+                  ),
                 ),
               );
             },
