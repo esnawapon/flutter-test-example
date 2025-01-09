@@ -13,12 +13,10 @@ void main() async {
       return "";
     },
   );
-  di.init();
+  await di.init();
   runApp(const SimpleNoteApp());
 }
 
 Future<void> _saveNotes(String noteJson) async {
-  final storage = LocalStorage("app");
-  await storage.ready;
-  storage.setItem("notes", noteJson);
+  localStorage.setItem("notes", noteJson);
 }

@@ -10,15 +10,13 @@ import 'package:flutter_test_example/simple_note/injection.dart' as di;
 import 'package:localstorage/localstorage.dart';
 
 Future<void> _saveNotes(List<Note> notes) async {
-  final storage = LocalStorage("app");
-  await storage.ready;
-  storage.setItem("notes", json.encode(notes.map((e) => e.toJson()).toList()));
+  localStorage.setItem("notes", json.encode(notes.map((e) => e.toJson()).toList()));
 }
 
 void main() {
   testWidgets("As a user, I can write my note and I can save it", (tester) async {
+    await di.init();
     _saveNotes([]);
-    di.init();
     await tester.pumpWidget(const SimpleNoteApp());
     await tester.pumpAndSettle();
 
@@ -58,6 +56,7 @@ void main() {
   });
 
   testWidgets("As a user, I can delete my note", (tester) async {
+    await di.init();
     final initNote = Note(
       id: "TEST_NOTE_01",
       title: "TEST NOTE TITLE",
@@ -68,7 +67,6 @@ void main() {
       initNote,
     ]);
     final noteItemKey = "note_item_id[${initNote.id}]";
-    di.init();
     await tester.pumpWidget(const SimpleNoteApp());
     await tester.pumpAndSettle();
 

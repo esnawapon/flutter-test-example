@@ -8,15 +8,13 @@ import 'package:uuid/uuid.dart';
 const _itemKey = "notes";
 
 class LocalNoteRepository implements NoteRepository {
-  final _storage = LocalStorage("app");
   final _uuid = const Uuid();
 
   @override
   Future<List<Note>> all() async {
     try {
-      await _storage.ready;
       return json
-          .decode(_storage.getItem(_itemKey)) //
+          .decode(localStorage.getItem(_itemKey) ?? "") //
           .map<Note>((e) => Note.fromJson(e))
           .toList();
     } catch (e) {
@@ -45,7 +43,7 @@ class LocalNoteRepository implements NoteRepository {
   }
 
   Future<void> _saveAll(List<Note> notes) async {
-    await _storage.setItem(
+    localStorage.setItem(
       _itemKey,
       json.encode(notes.map((e) => e.toJson()).toList()),
     );
